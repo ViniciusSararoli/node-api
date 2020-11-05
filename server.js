@@ -10,10 +10,12 @@ const requireDir = require('require-dir');
 
 //Inicio do app
 const app = express();
+// Permitir que evie dados para a aplicação no formato de JSON
+app.use(express.json());
 
 //Conexão com o banco de dados
 mongoose.connect(
-  'mongodb://localhost:27017/nodeapi', 
+  'mongodb://localhost:27017/nodeapi',
   { useNewUrlParser: true }
 );
 
@@ -21,7 +23,7 @@ requireDir("./src/model");// Depois da conexão, pois precisa já estar conectad
 //Utilizar biblioteca (npm install require-dir) para fazer o require em todos os arquivos dos 'Models' automaticamente
 
 //rota
-app.use('/api',require("./src/routes"))
+app.use('/api', require("./src/routes"))
 
 app.listen(3001);
 
