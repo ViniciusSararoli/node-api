@@ -1,4 +1,5 @@
 const mongoose = require('mongoose'); //importação do mongoose
+const mongoosePaginate = require ('mongoose-paginate');
 
 //criando variavel
 const ProductSchema = new mongoose.Schema({
@@ -23,6 +24,8 @@ const ProductSchema = new mongoose.Schema({
     default: Date.now, // preenche automaticamente com a data atual
   },
 });
+
+ProductSchema.plugin(mongoosePaginate);
 
 mongoose.model('product', ProductSchema); // Codigo apra registrar um MODEL na aplicação
 
