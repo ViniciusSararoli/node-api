@@ -1,0 +1,16 @@
+Carregar o HTML automaticamente (npm install -D nodemon)
+Alteração executada manualmente (node server.js)
+Alterações serem rodadas automaticamente configurando o package.json c/ "start": "server.js" (npm run dev)
+
+Para instalar MongoDB(npm install mongoose)
+Executa o mongoDB (mongod)
+Instalação  de paginação (npm install mongoose-paginate)
+
+Instalação de CORS para permitira acesso externo da API (npm install cors)
+
+Istalar SEQUILIZE para usar com SQL e criar pasta de config/ (yarn add sequelize)
+Iniciar SEQUILIZE (npx sequelize-cli init)
+Criar pasta migrations com  SEQUILIZE para facilitar na criação de tabelas (npx sequelize-cli migration:generate --name create-services)
+Criar trabela no banco de dados (npx sequelize-cli db:migrate)
+
+Encerrar processo  (npx kill-port --port 3030)
