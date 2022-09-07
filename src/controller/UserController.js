@@ -1,4 +1,8 @@
-const connection = require("../database/connerction")
+/*Usar c/ try para verificar erros 
+return res.status(400).json({ error: err.message });
+*/
+
+const connection = require("../database/connection")
 
 const responseModel = {
   success: false,
@@ -10,11 +14,10 @@ module.exports = {
 
   async create(req, res) {
     const response = {...responseModel}
-
-    const { username, password, email} = req.body;
-    
+    const { completename, password, email } = req.body
+      
     const [,affectRows] = await connection.query(`
-      insert into users values('','${username}','${email}','${password}')
+      INSERT INTO  users (idlogin, completename, email, password) VALUES (DEFAULT,'${completename}','${email}','${password}')
     `)
 
     response.success = affectRows > 0 
@@ -24,13 +27,14 @@ module.exports = {
   async login(req, res) {
     const response = {...responseModel}
 
-    const { username, password, email} = req.body;
+    const { completename, password, email} = req.body;
     
     const [,data] = await connection.query(`
-      select * from users where email='${email}' and password='${password}'
+      select us.idlogin,us.completename as name,us.password from users as us where us.email='${email}' and us.password='${password}'
     `)
 
     console.log(data)
+
     return res.json(response)
   }
 }
