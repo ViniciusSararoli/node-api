@@ -1,33 +1,63 @@
-const mongoose = require('mongoose'); //importação do mongoose
-const mongoosePaginate = require ('mongoose-paginate');
+// const { poolPromise } = require("../database/connection")
+const connection = require("../database/connection")
 
-//criando variavel
-const ProductSchema = new mongoose.Schema({
-  //campos que desejo salvar no bd
-  title: {
-    type: String, //tipo
-    required: true, //obratorio
-  },
+const responseModel = {
+  success: false,
+  data: [],
+  error: []
+}
 
-  description: {
-    type: String, //tipo
-    required: true, //obratorio
-  },
+exports.create = async (date,req,res) => {
+  const response = {...responseModel}
 
-  url: {
-    type: String, //tipo
-    required: true, //obratorio
-  },
+  const [,affectRows] = await connection.query(`INSERT INTO product (name,url,value,date)
+    VALUES ('${date.name}','${date.url}','${date.value}',NOW())`)
 
-  createdAt: {
-    type: Date,
-    default: Date.now, // preenche automaticamente com a data atual
-  },
-});
+  response.success = affectRows > 0 
 
-ProductSchema.plugin(mongoosePaginate);
+  return response
+}
 
-mongoose.model('product', ProductSchema); // Codigo apra registrar um MODEL na aplicação
+exports.read = async () => {
+    const pool = await poolPromise;
+    const rs = await pool
+        .request()
+        .query(`SELECT *
+                FROM product`)
 
+    return rs.recordset;
+}
 
-//Necessario dar um require na conecação com o BD
+exports.update = async (id, date) => {
+    const pool = await poolPromise;
+    const rs = await pool
+        .request()
+        .query(`UPDATE product SET
+                name = '${date[0].name}'                    
+                url = '${date[0].url}'                    
+                value = '${date[0].value}'                    
+                WHERE idproduct = ${id}`);
+
+    return rs.rowsAffected;
+}
+
+exports.delete = async (id) => {
+    const pool = await poolPromise;
+    const rs = await pool
+        .request()
+        .query(`DELETE FROM product
+                WHERE idproduct = ${id}`)
+
+    return rs.rowsAffected;
+}
+
+exports.readById = async(id) =>{
+    const pool = await poolPromise;
+    const rs = await pool
+            .request()
+            .query(`SELECT *
+                    FROM product 
+                    WHERE idproduct = ${id} `);
+    
+            return rs.recordset;
+}
