@@ -8,20 +8,12 @@ routes.post("/user", UserController.create)
 
 const ProductController = require('../controller/ProductController')
 routes.post("/product", ProductController.create)
+routes.get("/product", ProductController.read)
+
+routes.put("/product/:id", ProductController.update)
+routes.get("/product/:id", ProductController.readById)
+routes.delete("/product/:id", ProductController.delete)
 
 
 module.exports = routes;
 
-/* 
-module.exports = app => {
-
-    app.route('/product')
-        .post(ProductController.create)
-        .get(ProductController.read)
-
-    app.route('/product/:id')
-        .put(ProductController.update)
-        .delete(ProductController.delete)
-        .get(ProductController.readById)
-}
- */

@@ -19,13 +19,11 @@ exports.create = async (date,req,res) => {
 }
 
 exports.read = async () => {
-    const pool = await poolPromise;
-    const rs = await pool
-        .request()
-        .query(`SELECT *
-                FROM product`)
+  const response = {...responseModel}
+  const [,data] = await connection.query(`
+  SELECT * FROM product`)
 
-    return rs.recordset;
+  return data;
 }
 
 exports.update = async (id, date) => {
