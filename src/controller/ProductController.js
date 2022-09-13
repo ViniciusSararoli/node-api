@@ -1,46 +1,42 @@
-/* const mongoose = require('mongoose');
+const Person = require('../model/Product')
 
-const Product = mongoose.model('Product');
+exports.create = async(req, res) => {
+    const person = await Person.create(req.body)
 
-module.exports = {
-  async index(req, res) {
-    const { page = 1 } = req.query;
-    // listagem
-    const products = await Product.paginate({}, { page, limit: 10 }); //podendo colocar verificação no find, como por exemplo "Wherwe"
-    //"await" - Faz com que a proxima linha só execute depois de localizar os registro no Banco de dados
-    return res.json(products);
-  },
+    if(person.success === true){
+        res.status(200).send({message: 'Ok!'})
+    }else{
+        res.status(500).send({message: 'Error.'})
+    }
+}
 
-  async show(req, res) {
-    //consulta
-    const product = await Product.findById(req.params.id);
+exports.read = async(req, res) => {
+    const person = await Person.read();
+    res.status(200).send(person)
+}
 
-    return res.json(product);
-  },
+exports.update = async(req, res) => {
+    const person = await Person.update(req.params.id, req.body)
 
-  async create(req, res) {
-    //Codigo de criação
-    const product = await Product.create(req.body);
+    if(person){
+        res.status(200).send({message: 'Ok!'})
+    }else{
+        res.status(500).send({message: 'Error.'})
+    }
+}
 
-    // retornar o produto da base de dados
-    return res.json(product);
-  },
+exports.delete = async (req, res) => {
+    const person = await Person.delete(req.params.id, req.body);
 
-  //alteração
-  async update(req, res) {
-    const product = await Product.findByIdAndUpdate(req.params.id);
+    if (person) {
+        res.status(200).send({ message: 'Ok!' })
+    } else {
+        res.status(500).send({ message: 'Error.' });
+    }
+}
 
-    return res.json(product);
-  },
 
-  //deletar
-  async delete(req, res) {
-    //Não pegou o produto, porque vai deletar
-    await Product.findOneAndDelete(req.params.id, { new: true });
-
-    //retorna resposta de sucesso sem conteudo
-    return res.sent();
-  
-  }
-
-}; */
+exports.readById = async(req, res) => {
+    const person = await Person.readById(req.params.id)
+    res.status(200).send(person)
+}

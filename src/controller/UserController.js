@@ -33,8 +33,6 @@ module.exports = {
       select us.idlogin,us.completename as name,us.password from users as us where us.email='${email}' and us.password='${password}'
     `)
 
-    console.log(data)
-
-    return res.json(response)
+    return res.json(data)
   }
 }
