@@ -1,16 +1,3 @@
-//Carregar o HTML automaticamente (npm install -D nodemon)
-// Alteração executada manualmente (node server.js)
-// Alterações serem rodadas automaticamente (npm run dev)
-//Para conectar o codigo com o MongoDB(npm install mongoose)
-//Executa o mongoDB (mongod)
-// Instalação  de paginação (npm install mongoose-paginate)
-// Instalação de CORS para permitira acesso externo da API (npm install cors)
-// Istalar SEQUILIZE (yarn add sequelize)
-// Iniciar SEQUILIZE (npx sequelize-cli init)
-// Criar pasta migrations com  SEQUILIZE para facilitar na criação de tabelas (npx sequelize-cli migration:generate --name create-services)
-// Criar trabela no banco de dados (npx sequelize-cli db:migrate)
-// Encerrar processo  npx kill-port --port http://localhost:3030
-
 const express = require("express")
 const app = express()
 require("dotenv").config()
@@ -22,36 +9,39 @@ app.use(express.json());
 const protocol = process.env.PROTOCOL || "http"
 const ip = require("ip").address()
 const port = process.env.PORT || 3030
-
 //rota
 const routes = require("./src/routes/routes")
 app.use(routes); 
 //app.listen(3001);
 app.listen(port, () => console.log(`Server started  in http://localhost:${port} or ${protocol}://${ip}:${port}`));
 
-/* 
-
-/* 
-const cors = require("cors");
-const mongoose = require("mongoose");
-const requireDir = require("require-dir");
- */
-
-//Inicio do app
+//Controle dpara recebimento de dados
+const body = require("body-parser")
+app.use(body.urlencoded ({extended: false})) //Apenas dados simples
+app.use(body.json()) // Apenas json para entrada no body
 
 //Permiter que outros enderecos acesse a api
-//app.use(cors());
+const cors = require("cors");
+app.use(cors());
+app.use((req, res, next) => {
+  res.header("Access-Control-Allow-Origin", "*") // https://api.cartorionobrasil.com.br/ Caso fosse em produção colocaria no lougar do * 
+  res.header(
+    "Access-Control-Allow-Header", 
+    "Origin,X-Requested-With,Content-Type, Accept, Authorization") // Oque aceitará de cabeçalho 
 
-//Conexão com o banco de dados
+  if(req.method == "OPTIONS") {
+    res.header("Access-Control-Allow-Method", "GET, POST, DELETE, PATCH, PUT") 
+
+    return res.status(200).send({})
+
+  }
+  next()
+})
+
 /* 
-mongoose.connect(
-  'mongodb://localhost:27017/nodeapi',
-  { useNewUrlParser: true }
-); 
+const requireDir = require("require-dir");
+requireDir("./src/model");// Depois da conexão, pois precisa já estar conectado
+Utilizar biblioteca (npm install require-dir) para fazer o require em todos os arquivos dos 'Models' automaticamente
 */
-
-//requireDir("./src/model");// Depois da conexão, pois precisa já estar conectado
-//Utilizar biblioteca (npm install require-dir) para fazer o require em todos os arquivos dos 'Models' automaticamente
-
 
 

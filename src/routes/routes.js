@@ -14,6 +14,9 @@ routes.put("/product/:id", ProductController.update)
 routes.get("/product/:id", ProductController.readById)
 routes.delete("/product/:id", ProductController.delete)
 
+const CalcularController = require('../controller/CalcularController')
+routes.get("/calcular/:id", CalcularController.calcular)
+
 
 module.exports = routes;
 
