@@ -24,7 +24,7 @@ app.use(body.json()) // Apenas json para entrada no body
 const cors = require("cors");
 app.use(cors());
 app.use((req, res, next) => {
-  res.header("Access-Control-Allow-Origin", "*") // https://api.cartorionobrasil.com.br/ Caso fosse em produção colocaria no lougar do * 
+  res.header("Access-Control-Allow-Origin", "*") // https://api.documento.com.br/ Caso fosse em produção colocaria no lougar do * 
   res.header(
     "Access-Control-Allow-Header", 
     "Origin,X-Requested-With,Content-Type, Accept, Authorization") // Oque aceitará de cabeçalho 
