@@ -14,8 +14,12 @@ routes.put("/product/:id", ProductController.update)
 routes.get("/product/:id", ProductController.readById)
 routes.delete("/product/:id", ProductController.delete)
 
-const CalcularController = require('../controller/CalcularController')
-routes.get("/calcular/:id", CalcularController.calcular)
+const WebserverCartorio = require('../controller/WebserverCartorio')
+routes.get("/cartorio/:cartorio/", WebserverCartorio.get)
+routes.get("/pesquisa-bens/", WebserverCartorio.get)
+routes.get("/pesquisa-bens/:state", WebserverCartorio.get)
+routes.get("/pesquisa-bens/:state/:city/", WebserverCartorio.get)
+routes.get("/pesquisa-bens/:state/:city/:cartorio/", WebserverCartorio.get)
 
 
 module.exports = routes;
