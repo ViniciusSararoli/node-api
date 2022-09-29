@@ -14,13 +14,15 @@ routes.put("/product/:id", ProductController.update)
 routes.get("/product/:id", ProductController.readById)
 routes.delete("/product/:id", ProductController.delete)
 
-const WebserverCartorio = require('../controller/WebserverCartorio')
-routes.get("/cartorio/:cartorio/", WebserverCartorio.get)
-routes.get("/pesquisa-bens/", WebserverCartorio.get)
-routes.get("/pesquisa-bens/:state", WebserverCartorio.get)
-routes.get("/pesquisa-bens/:state/:city/", WebserverCartorio.get)
-routes.get("/pesquisa-bens/:state/:city/:cartorio/", WebserverCartorio.get)
+const CalcularController = require('../controller/CalcularController')
+routes.get("/calcular/:tipo_certidao/", CalcularController.calcular)
 
+const WebserverCartorio = require('../controller/WebserverCartorio')
+routes.get("/cartorio/:url_cart/", WebserverCartorio.call)
+routes.get("/:tipo_certidao/", WebserverCartorio.call)
+routes.get("/:tipo_certidao/:estado/", WebserverCartorio.call)
+routes.get("/:tipo_certidao/:estado/:cidade/", WebserverCartorio.call)
+routes.get("/:tipo_certidao/:estado/:cidade/:cartorio/", WebserverCartorio.call)
 
 module.exports = routes;
 

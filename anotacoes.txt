@@ -19,3 +19,5 @@ Encerrar processo  (npx kill-port --port 3030)
 Instal body parser para poder controllar tipos de dados recebidos(npm install body-parser)
 
 Instalar o CORS para definir os tipos de informações a serem passadas no cabeçalho(npm install cors)
+
+Instalar axio para api rest (npm install axios)
