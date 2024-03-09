@@ -13,4 +13,6 @@ mysql2
 Install the dependencies.
 The .env file with database settings.
 After all, start by using node server.js.
+
+Para acessar a API é necessário usar uma basic Auth
  
